@@ -1,0 +1,74 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import { Film, Mail } from "lucide-react";
+
+const Footer = () => {
+  return (
+    <footer className="bg-film-dark border-t border-border">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Company Info */}
+          <div className="space-y-4">
+            <div className="flex items-center space-x-2">
+              <Film className="h-6 w-6 text-accent" />
+              <span className="font-nav font-bold text-xl text-foreground">
+                First Draft Filmworks
+              </span>
+            </div>
+            <div className="flex items-center space-x-2 text-muted-foreground">
+              <Mail className="h-4 w-4" />
+              <a 
+                href="mailto:firstdraftfilmworks@gmail.com"
+                className="hover:text-accent transition-colors"
+              >
+                firstdraftfilmworks@gmail.com
+              </a>
+            </div>
+          </div>
+
+          {/* Legals */}
+          <div className="space-y-4">
+            <h3 className="font-nav font-semibold text-lg text-foreground">
+              Legals
+            </h3>
+            <div className="space-y-2">
+              <Link 
+                to="/terms" 
+                className="block text-muted-foreground hover:text-accent transition-colors"
+              >
+                Terms of Service
+              </Link>
+              <Link 
+                to="/privacy" 
+                className="block text-muted-foreground hover:text-accent transition-colors"
+              >
+                Privacy Policy
+              </Link>
+            </div>
+          </div>
+
+          {/* Blog */}
+          <div className="space-y-4">
+            <h3 className="font-nav font-semibold text-lg text-foreground">
+              Blog
+            </h3>
+            <Link 
+              to="/blog" 
+              className="block text-muted-foreground hover:text-accent transition-colors"
+            >
+              Latest Articles
+            </Link>
+          </div>
+        </div>
+
+        <div className="mt-8 pt-8 border-t border-border">
+          <p className="text-center text-muted-foreground text-sm">
+            © {new Date().getFullYear()} First Draft Filmworks. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
