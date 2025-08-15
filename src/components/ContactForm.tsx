@@ -38,8 +38,31 @@ const ContactForm: React.FC<ContactFormProps> = ({
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    const formData = new FormData(e.currentTarget);
+    const data: Record<string, string> = {};
+    
+    formData.forEach((value, key) => {
+      data[key] = value.toString();
+    });
+
+    // Create mailto link
+    const emailSubject = subject;
+    const emailBody = `
+Name: ${data.name}
+Email: ${data.email}
+Production House: ${data.company || 'Not provided'}
+Website: ${data.website || 'Not provided'}
+Country: ${data.country || 'Not selected'}
+${data.service ? `Service of Interest: ${data.service}` : ''}
+${data.projectType ? `Project Type: ${data.projectType}` : ''}
+${data.scriptLength ? `Script Length: ${data.scriptLength}` : ''}
+
+Message:
+${data.message}
+    `.trim();
+
+    const mailtoLink = `mailto:thecorporatecinema@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+    window.open(mailtoLink);
 
     toast({
       title: "Message Sent!",

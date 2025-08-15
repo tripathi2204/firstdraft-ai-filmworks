@@ -74,14 +74,12 @@ const Header = () => {
               About Me
             </Link>
 
-            <Link
-              to="/testimonials"
-              className={`font-nav transition-colors ${
-                isActive("/testimonials") ? "text-accent" : "text-foreground hover:text-accent"
-              }`}
+            <a
+              href="#testimonials"
+              className="font-nav transition-colors text-foreground hover:text-accent"
             >
               Testimonials
-            </Link>
+            </a>
 
             <Link
               to="/blog"
@@ -93,7 +91,7 @@ const Header = () => {
             </Link>
 
             <Button variant="nav-cta" size="sm" asChild>
-              <Link to="/#contact">Contact Me</Link>
+              <a href="#contact">Contact Me</a>
             </Button>
           </div>
 
@@ -138,13 +136,13 @@ const Header = () => {
                 About Me
               </Link>
 
-              <Link
-                to="/testimonials"
+              <a
+                href="#testimonials"
                 className="block px-3 py-2 text-sm font-nav text-card-foreground hover:bg-muted hover:text-accent transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Testimonials
-              </Link>
+              </a>
 
               <Link
                 to="/blog"
@@ -156,9 +154,9 @@ const Header = () => {
 
               <div className="px-3 py-2">
                 <Button variant="nav-cta" size="sm" className="w-full" asChild>
-                  <Link to="/#contact" onClick={() => setIsMenuOpen(false)}>
+                  <a href="#contact" onClick={() => setIsMenuOpen(false)}>
                     Contact Me
-                  </Link>
+                  </a>
                 </Button>
               </div>
             </div>

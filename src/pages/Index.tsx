@@ -178,38 +178,30 @@ const Index = () => {
           </p>
           
           <Button variant="cta" size="xl" asChild>
-            <Link to="#contact">
+            <a href="#contact">
               Get Started Today
               <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
+            </a>
           </Button>
         </div>
         
-        {/* Hero Image */}
-        <div className="relative mt-16 container mx-auto">
-          <img 
-            src={heroImage} 
-            alt="Professional film production setup"
-            className="w-full max-w-4xl mx-auto rounded-2xl shadow-glow"
-          />
-        </div>
       </section>
 
       {/* Services Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">
           {/* Service Navigation */}
-          <div className="flex flex-wrap justify-center gap-2 mb-16">
+          <div className="flex flex-wrap justify-center gap-2 mb-16 md:flex-row grid grid-cols-2 md:grid-cols-none md:gap-2 gap-1">
             {services.map((service, index) => {
               const Icon = service.icon;
               return (
-                <Button
-                  key={service.id}
-                  variant={activeService === index ? "hero" : "service"}
-                  size="lg"
-                  onClick={() => setActiveService(index)}
-                  className="flex items-center gap-2 text-sm md:text-base font-nav font-semibold"
-                >
+                  <Button
+                    key={service.id}
+                    variant={activeService === index ? "hero" : "service"}
+                    size="lg"
+                    onClick={() => setActiveService(index)}
+                    className="flex items-center gap-2 text-xs md:text-base font-nav font-semibold md:px-4 px-2"
+                  >
                   <Icon className="h-4 w-4" />
                   {service.title}
                 </Button>
@@ -278,7 +270,10 @@ const Index = () => {
             My Hybrid Approach Works Best
           </p>
           
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto relative">
+            <div className="md:hidden absolute bottom-0 right-0 bg-gradient-to-l from-card to-transparent w-8 h-full pointer-events-none flex items-center justify-end pr-2">
+              <span className="text-accent text-xs">→</span>
+            </div>
             <table className="w-full bg-card/40 backdrop-blur-sm border border-border rounded-xl">
               <thead>
                 <tr className="border-b border-border">
@@ -332,7 +327,7 @@ const Index = () => {
                     <td className="p-6 text-center text-muted-foreground">{row.industry}</td>
                     <td className="p-6 text-center text-muted-foreground">{row.ai}</td>
                     <td className="p-6 text-center text-foreground bg-accent/5 font-medium">
-                      {row.hybrid}
+                      {row.hybrid.replace('✅', '✅')}
                     </td>
                   </tr>
                 ))}
@@ -360,18 +355,17 @@ const Index = () => {
                 description: "Hundreds of verified ratings from happy clients worldwide."
               }
             ].map((item, index) => (
-              <div key={index} className="text-center max-w-xs">
-                <div className="w-24 h-24 bg-gradient-accent rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Star className="h-8 w-8 text-background" />
+              <div key={index} className="text-center max-w-xs relative">
+                <div className="w-32 h-32 bg-gradient-accent rounded-2xl flex flex-col items-center justify-center mx-auto mb-4 p-4">
+                  <h3 className="text-sm font-heading font-bold text-background text-center leading-tight">
+                    {item.stat}
+                  </h3>
                 </div>
-                <h3 className="text-xl font-heading font-bold text-foreground mb-2">
-                  {item.stat}
-                </h3>
                 <p className="text-sm text-muted-foreground font-body">
                   {item.description}
                 </p>
                 {index < 2 && (
-                  <div className="hidden md:block absolute top-1/2 right-[-4rem] w-8 h-0.5 bg-accent/30" />
+                  <div className="hidden md:block absolute top-16 -right-8 w-16 h-0.5 bg-accent/30" />
                 )}
               </div>
             ))}
@@ -380,7 +374,7 @@ const Index = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-card/30">
+      <section id="testimonials" className="py-20 px-4 sm:px-6 lg:px-8 bg-card/30">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
             Excellence Delivered, Every Time.
@@ -447,9 +441,18 @@ const Index = () => {
         <div className="container mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
+              <Badge variant="outline" className="mb-4 text-sm font-body border-film-violet/30 text-muted-foreground">
+                My Process
+              </Badge>
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-8">
                 My 4-Step AI-Powered Pre-Production Process
               </h2>
+              <Button variant="cta" size="lg" asChild>
+                <a href="#contact">
+                  Get Started Today
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </a>
+              </Button>
             </div>
             
             <div className="space-y-8">
@@ -520,22 +523,40 @@ const Index = () => {
             Frequently asked questions
           </h2>
           
-          <Accordion type="single" collapsible className="space-y-4">
-            {faqs.map((faq, index) => (
-              <AccordionItem 
-                key={index} 
-                value={`item-${index}`}
-                className="bg-card/40 backdrop-blur-sm border border-border rounded-lg px-6"
-              >
-                <AccordionTrigger className="font-nav font-semibold text-foreground hover:text-accent">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="font-body text-foreground/80 leading-relaxed">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqs.slice(0, 3).map((faq, index) => (
+                <AccordionItem 
+                  key={index} 
+                  value={`item-${index}`}
+                  className="bg-card/40 backdrop-blur-sm border border-border rounded-lg px-6"
+                >
+                  <AccordionTrigger className="font-nav font-semibold text-foreground hover:text-accent">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="font-body text-foreground/80 leading-relaxed">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqs.slice(3).map((faq, index) => (
+                <AccordionItem 
+                  key={index + 3} 
+                  value={`item-${index + 3}`}
+                  className="bg-card/40 backdrop-blur-sm border border-border rounded-lg px-6"
+                >
+                  <AccordionTrigger className="font-nav font-semibold text-foreground hover:text-accent">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="font-body text-foreground/80 leading-relaxed">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </div>
       </section>
 

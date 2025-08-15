@@ -74,14 +74,23 @@ const ScriptBreakdown = () => {
         </div>
       </section>
 
-      {/* Behind the Scenes Section */}
+      {/* Service Workflow Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-card/30">
         <div className="container mx-auto">
-          <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground text-center mb-16">
-            Behind the Scenes
-          </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
+                Service Workflow
+              </h2>
+              <p className="text-lg text-accent font-body mb-8">
+                Behind the Scenes
+              </p>
+            </div>
+            <div></div>
+          </div>
           
-          <div className="space-y-16 max-w-4xl mx-auto">
+          <div className="mt-16">
+            <div className="space-y-16 max-w-4xl mx-auto">
             {[
               {
                 step: "1",
@@ -115,6 +124,7 @@ const ScriptBreakdown = () => {
                 </div>
               </div>
             ))}
+            </div>
           </div>
         </div>
       </section>
@@ -126,11 +136,8 @@ const ScriptBreakdown = () => {
             <CardContent className="p-8">
               <div className="text-center mb-8">
                 <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground mb-2">
-                  The Big Picture
+                  Key Highlights
                 </h2>
-                <p className="text-lg text-accent font-body">
-                  Close-up on highlights
-                </p>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
