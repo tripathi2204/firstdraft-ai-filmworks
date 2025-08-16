@@ -86,44 +86,39 @@ const ScriptBreakdown = () => {
                 Behind the Scenes
               </p>
             </div>
-            <div></div>
-          </div>
-          
-          <div className="mt-16">
-            <div className="space-y-16 max-w-4xl mx-auto">
-            {[
-              {
-                step: "1",
-                title: "AI Element Extraction",
-                description: "My process begins with a comprehensive, AI based extraction of all key production elements from the script using agentic workflows I created to extract cast, extras, props, wardrobe and costumes, makeup and hair requirements, sets, special effects, vehicles, animals, and other critical details."
-              },
-              {
-                step: "2", 
-                title: "One-Liner Creation",
-                description: "A dedicated AI agent I have developed then analyzes each scene to generate concise one-line summaries, capturing the essence of the action and requirements."
-              },
-              {
-                step: "3",
-                title: "Professional Breakdown Integration", 
-                description: "One-liners, along with the extracted elements, are compiled and structured within industry-standard scheduling software. Leveraging my expertise, I meticulously proofread and organize the breakdown to ensure it meets professional production standards."
-              }
-            ].map((item, index) => (
-              <div key={index} className="flex gap-8 items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-16 h-16 bg-accent text-accent-foreground rounded-full flex items-center justify-center text-2xl font-heading font-bold">
+            
+            <div className="space-y-8">
+              {[
+                {
+                  step: "1",
+                  title: "AI Element Extraction",
+                  description: "My process begins with a comprehensive, AI based extraction of all key production elements from the script using agentic workflows I created to extract cast, extras, props, wardrobe and costumes, makeup and hair requirements, sets, special effects, vehicles, animals, and other critical details."
+                },
+                {
+                  step: "2", 
+                  title: "One-Liner Creation",
+                  description: "A dedicated AI agent I have developed then analyzes each scene to generate concise one-line summaries, capturing the essence of the action and requirements."
+                },
+                {
+                  step: "3",
+                  title: "Professional Breakdown Integration", 
+                  description: "One-liners, along with the extracted elements, are compiled and structured within industry-standard scheduling software. Leveraging my expertise, I meticulously proofread and organize the breakdown to ensure it meets professional production standards."
+                }
+              ].map((item, index) => (
+                <div key={index} className="flex gap-4">
+                  <div className="flex-shrink-0 w-8 h-8 bg-accent text-accent-foreground rounded-full flex items-center justify-center font-nav font-bold">
                     {item.step}
                   </div>
+                  <div>
+                    <h3 className="text-xl font-heading font-bold text-foreground mb-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-foreground/80 font-body">
+                      {item.description}
+                    </p>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-xl md:text-2xl font-heading font-bold text-foreground mb-4">
-                    {item.title}
-                  </h3>
-                  <p className="text-foreground/80 font-body leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
-              </div>
-            ))}
+              ))}
             </div>
           </div>
         </div>
@@ -186,22 +181,40 @@ const ScriptBreakdown = () => {
             Frequently asked questions
           </h2>
           
-          <Accordion type="single" collapsible className="space-y-4">
-            {faqs.map((faq, index) => (
-              <AccordionItem 
-                key={index} 
-                value={`item-${index}`}
-                className="bg-card/40 backdrop-blur-sm border border-border rounded-lg px-6"
-              >
-                <AccordionTrigger className="font-nav font-semibold text-foreground hover:text-accent">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="font-body text-foreground/80 leading-relaxed">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqs.slice(0, 3).map((faq, index) => (
+                <AccordionItem 
+                  key={index} 
+                  value={`item-${index}`}
+                  className="bg-card/40 backdrop-blur-sm border border-border rounded-lg px-6"
+                >
+                  <AccordionTrigger className="font-nav font-semibold text-foreground hover:text-accent">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="font-body text-foreground/80 leading-relaxed">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqs.slice(3).map((faq, index) => (
+                <AccordionItem 
+                  key={index + 3} 
+                  value={`item-${index + 3}`}
+                  className="bg-card/40 backdrop-blur-sm border border-border rounded-lg px-6"
+                >
+                  <AccordionTrigger className="font-nav font-semibold text-foreground hover:text-accent">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="font-body text-foreground/80 leading-relaxed">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </div>
       </section>
 

@@ -51,7 +51,6 @@ const ContactForm: React.FC<ContactFormProps> = ({
 Name: ${data.name}
 Email: ${data.email}
 Production House: ${data.company || 'Not provided'}
-Website: ${data.website || 'Not provided'}
 Country: ${data.country || 'Not selected'}
 ${data.service ? `Service of Interest: ${data.service}` : ''}
 ${data.projectType ? `Project Type: ${data.projectType}` : ''}
@@ -86,15 +85,9 @@ ${data.message}
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="space-y-2">
-          <Label htmlFor="company">Production House</Label>
-          <Input id="company" name="company" />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="website">Website</Label>
-          <Input id="website" name="website" type="url" />
-        </div>
+      <div className="space-y-2">
+        <Label htmlFor="company">Production House</Label>
+        <Input id="company" name="company" />
       </div>
 
       <div className="space-y-2">

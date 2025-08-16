@@ -191,7 +191,7 @@ const Index = () => {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">
           {/* Service Navigation */}
-          <div className="flex flex-wrap justify-center gap-2 mb-16 md:flex-row grid grid-cols-2 md:grid-cols-none md:gap-2 gap-1">
+          <div className="flex flex-wrap justify-center gap-2 mb-16 md:flex-row grid grid-cols-2 md:grid-cols-6 md:gap-2 gap-1">
             {services.map((service, index) => {
               const Icon = service.icon;
               return (
@@ -357,7 +357,7 @@ const Index = () => {
             ].map((item, index) => (
               <div key={index} className="text-center max-w-xs relative">
                 <div className="w-32 h-32 bg-gradient-accent rounded-2xl flex flex-col items-center justify-center mx-auto mb-4 p-4">
-                  <h3 className="text-sm font-heading font-bold text-background text-center leading-tight">
+                  <h3 className="text-sm font-heading font-bold text-accent-foreground text-center leading-tight">
                     {item.stat}
                   </h3>
                 </div>

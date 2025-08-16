@@ -33,37 +33,33 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <div className="relative">
-              <button
-                className="flex items-center space-x-1 font-nav text-foreground hover:text-accent transition-colors"
-                onMouseEnter={() => setIsServicesOpen(true)}
-                onMouseLeave={() => setIsServicesOpen(false)}
-              >
-                <span>Services</span>
-                <ChevronDown className="h-4 w-4" />
-              </button>
+          <div className="relative">
+            <button
+              className="flex items-center space-x-1 font-nav text-foreground hover:text-accent transition-colors"
+              onClick={() => setIsServicesOpen(!isServicesOpen)}
+            >
+              <span>Services</span>
+              <ChevronDown className="h-4 w-4" />
+            </button>
 
-              {/* Services Dropdown */}
-              {isServicesOpen && (
-                <div
-                  className="absolute top-full left-0 mt-2 w-56 bg-card border border-border rounded-lg shadow-card z-50"
-                  onMouseEnter={() => setIsServicesOpen(true)}
-                  onMouseLeave={() => setIsServicesOpen(false)}
-                >
-                  <div className="py-2">
-                    {services.map((service) => (
-                      <Link
-                        key={service.name}
-                        to={service.href}
-                        className="block px-4 py-2 text-sm font-nav text-card-foreground hover:bg-muted hover:text-accent transition-colors"
-                      >
-                        {service.name}
-                      </Link>
-                    ))}
-                  </div>
+            {/* Services Dropdown */}
+            {isServicesOpen && (
+              <div className="absolute top-full left-0 mt-2 w-56 bg-card border border-border rounded-lg shadow-card z-50">
+                <div className="py-2">
+                  {services.map((service) => (
+                    <Link
+                      key={service.name}
+                      to={service.href}
+                      className="block px-4 py-2 text-sm font-nav text-card-foreground hover:bg-muted hover:text-accent transition-colors"
+                      onClick={() => setIsServicesOpen(false)}
+                    >
+                      {service.name}
+                    </Link>
+                  ))}
                 </div>
-              )}
-            </div>
+              </div>
+            )}
+          </div>
 
             <Link
               to="/about"
@@ -75,7 +71,7 @@ const Header = () => {
             </Link>
 
             <a
-              href="#testimonials"
+              href={location.pathname === '/' ? "#testimonials" : "/#testimonials"}
               className="font-nav transition-colors text-foreground hover:text-accent"
             >
               Testimonials
@@ -91,7 +87,7 @@ const Header = () => {
             </Link>
 
             <Button variant="nav-cta" size="sm" asChild>
-              <a href="#contact">Contact Me</a>
+              <a href={location.pathname === '/' ? "#contact" : "/#contact"}>Contact Me</a>
             </Button>
           </div>
 
@@ -137,7 +133,7 @@ const Header = () => {
               </Link>
 
               <a
-                href="#testimonials"
+                href={location.pathname === '/' ? "#testimonials" : "/#testimonials"}
                 className="block px-3 py-2 text-sm font-nav text-card-foreground hover:bg-muted hover:text-accent transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -154,7 +150,7 @@ const Header = () => {
 
               <div className="px-3 py-2">
                 <Button variant="nav-cta" size="sm" className="w-full" asChild>
-                  <a href="#contact" onClick={() => setIsMenuOpen(false)}>
+                  <a href={location.pathname === '/' ? "#contact" : "/#contact"} onClick={() => setIsMenuOpen(false)}>
                     Contact Me
                   </a>
                 </Button>
