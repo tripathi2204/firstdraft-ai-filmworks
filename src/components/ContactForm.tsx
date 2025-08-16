@@ -63,10 +63,6 @@ ${data.message}
     const mailtoLink = `mailto:thecorporatecinema@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
     window.open(mailtoLink);
 
-    toast({
-      title: "Message Sent!",
-      description: "We will get back to you in 24 hours.",
-    });
 
     setIsSubmitting(false);
     (e.target as HTMLFormElement).reset();
