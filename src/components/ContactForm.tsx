@@ -1,162 +1,207 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
 
-interface ContactFormProps {
-  subject?: string;
-  showService?: boolean;
-  projectFields?: boolean;
-}
+const SERVICE_OPTIONS = [
+  "Shooting Schedule",
+  "Script Breakdown",
+  "Film Budgeting",
+  "AI Pitch Deck",
+  "Film Business Plan",
+  "AI Film Trailer",
+];
 
-const ContactForm: React.FC<ContactFormProps> = ({ 
-  subject = "General Inquiry", 
-  showService = true,
-  projectFields = false 
-}) => {
+const PROJECT_TYPE_OPTIONS = [
+  "Short Film",
+  "Feature",
+  "Series",
+];
+
+const BUDGET_OPTIONS = [
+  "Under $3,000,000",
+  "$3,000,001 - $6,250,000",
+  "$6,250,001 - $9,000,000",
+  "$9,000,001 - $12,500,000",
+  "$12,500,001 - $15,000,000",
+  "Over $15,000,000",
+];
+
+const WEBHOOK_URL = "https://n8n.n8n.in.net/webhook/50a824c3-a87c-493f-922e-80ecbbdfaed4";
+
+const ContactForm: React.FC = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitSuccessful },
+    reset,
+  } = useForm();
+
+  const [submitError, setSubmitError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { toast } = useToast();
 
-  const services = [
-    "Shooting Schedule",
-    "Script Breakdown", 
-    "Film Budgeting",
-    "AI Pitch Deck",
-    "Film Business Plan",
-    "AI Film Trailer"
-  ];
+  const onSubmit = async (data: any) => {
+    // Honeypot: If filled, block submission
+    if (data.middleName) {
+      setSubmitError("Spam detected.");
+      return;
+    }
 
-  const countries = [
-    "United States", "United Kingdom", "Canada", "Australia", "Germany", 
-    "France", "Italy", "Spain", "Netherlands", "India", "Other"
-  ];
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    setSubmitError("");
     setIsSubmitting(true);
-
-    const formData = new FormData(e.currentTarget);
-    const data: Record<string, string> = {};
     
-    formData.forEach((value, key) => {
-      data[key] = value.toString();
-    });
-
-    // Create mailto link
-    const emailSubject = subject;
-    const emailBody = `
-Name: ${data.name}
-Email: ${data.email}
-Production House: ${data.company || 'Not provided'}
-Country: ${data.country || 'Not selected'}
-${data.service ? `Service of Interest: ${data.service}` : ''}
-${data.projectType ? `Project Type: ${data.projectType}` : ''}
-${data.scriptLength ? `Script Length: ${data.scriptLength}` : ''}
-
-Message:
-${data.message}
-    `.trim();
-
-    const mailtoLink = `mailto:thecorporatecinema@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-    window.open(mailtoLink);
-
-
-    setIsSubmitting(false);
-    (e.target as HTMLFormElement).reset();
+    try {
+      const res = await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error(await res.text());
+      reset();
+    } catch (e: any) {
+      setSubmitError(e.message || "Submission failed.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-6"
+      autoComplete="off"
+    >
+      {/* Honeypot field */}
+      <input
+        type="text"
+        {...register("middleName")}
+        tabIndex={-1}
+        autoComplete="off"
+        style={{ display: "none" }}
+      />
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <Label htmlFor="name">Name *</Label>
-          <Input id="name" name="name" required />
+          <Input
+            id="name"
+            type="text"
+            {...register("name", { required: "Name is required" })}
+          />
+          {errors.name && <p className="text-destructive text-sm">{String(errors.name.message)}</p>}
         </div>
         <div className="space-y-2">
           <Label htmlFor="email">Email *</Label>
-          <Input id="email" name="email" type="email" required />
+          <Input
+            id="email"
+            type="email"
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i,
+                message: "Invalid email address"
+              }
+            })}
+          />
+          {errors.email && <p className="text-destructive text-sm">{String(errors.email.message)}</p>}
         </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="company">Production House</Label>
-        <Input id="company" name="company" />
+        <Label htmlFor="productionHouse">Production House</Label>
+        <Input
+          id="productionHouse"
+          type="text"
+          {...register("productionHouse")}
+        />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="country">Country</Label>
-        <Select name="country">
-          <SelectTrigger>
-            <SelectValue placeholder="Select your country" />
-          </SelectTrigger>
-          <SelectContent>
-            {countries.map((country) => (
-              <SelectItem key={country} value={country}>
-                {country}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <Label htmlFor="country">Country *</Label>
+        <Input
+          id="country"
+          type="text"
+          {...register("country", { required: "Country is required" })}
+        />
+        {errors.country && <p className="text-destructive text-sm">{String(errors.country.message)}</p>}
       </div>
 
-      {showService && (
-        <div className="space-y-2">
-          <Label htmlFor="service">Service of Interest</Label>
-          <Select name="service">
-            <SelectTrigger>
-              <SelectValue placeholder="Select a service" />
-            </SelectTrigger>
-            <SelectContent>
-              {services.map((service) => (
-                <SelectItem key={service} value={service}>
-                  {service}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      )}
-
-      {projectFields && (
-        <>
-          <div className="space-y-2">
-            <Label htmlFor="projectType">Project Type</Label>
-            <Select name="projectType">
-              <SelectTrigger>
-                <SelectValue placeholder="Select project type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="short-film">Short Film</SelectItem>
-                <SelectItem value="feature">Feature</SelectItem>
-                <SelectItem value="series">Series</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="scriptLength">Script Length</Label>
-            <Textarea 
-              id="scriptLength" 
-              name="scriptLength" 
-              placeholder="Please describe the page length of your script"
-              rows={3}
-            />
-          </div>
-        </>
-      )}
+      <div className="space-y-2">
+        <Label htmlFor="service">Service of Interest *</Label>
+        <select
+          id="service"
+          {...register("service", { required: "Select a service" })}
+          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          defaultValue=""
+        >
+          <option value="" disabled>Select a service</option>
+          {SERVICE_OPTIONS.map(opt => (
+            <option key={opt} value={opt}>{opt}</option>
+          ))}
+        </select>
+        {errors.service && <p className="text-destructive text-sm">{String(errors.service.message)}</p>}
+      </div>
 
       <div className="space-y-2">
-        <Label htmlFor="message">Your Message *</Label>
-        <Textarea 
-          id="message" 
-          name="message" 
-          required 
+        <Label htmlFor="projectType">Project Type</Label>
+        <select
+          id="projectType"
+          {...register("projectType")}
+          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          defaultValue=""
+        >
+          <option value="" disabled>Select project type</option>
+          {PROJECT_TYPE_OPTIONS.map(opt => (
+            <option key={opt} value={opt}>{opt}</option>
+          ))}
+        </select>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="scriptLength">Script Length</Label>
+        <Input
+          id="scriptLength"
+          type="text"
+          {...register("scriptLength")}
+          placeholder="Please describe the page length of your script"
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="projectBudgetRange">Project Budget Range *</Label>
+        <select
+          id="projectBudgetRange"
+          {...register("projectBudgetRange", { required: "Select a budget range" })}
+          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          defaultValue=""
+        >
+          <option value="" disabled>Select budget range</option>
+          {BUDGET_OPTIONS.map(opt => (
+            <option key={opt} value={opt}>{opt}</option>
+          ))}
+        </select>
+        {errors.projectBudgetRange && <p className="text-destructive text-sm">{String(errors.projectBudgetRange.message)}</p>}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="message">Your Message</Label>
+        <Textarea
+          id="message"
+          {...register("message")}
           rows={6}
           placeholder="Tell us about your project..."
         />
       </div>
+
+      {submitError && <p className="text-destructive">{submitError}</p>}
+      {isSubmitSuccessful && (
+        <p className="text-green-600">Thank you! We'll reply soon.</p>
+      )}
 
       <Button 
         type="submit" 
@@ -165,10 +210,11 @@ ${data.message}
         className="w-full"
         disabled={isSubmitting}
       >
-        {isSubmitting ? "Submitting..." : "Submit"}
+        {isSubmitting ? "Submitting..." : "Send"}
       </Button>
     </form>
   );
+
 };
 
 export default ContactForm;

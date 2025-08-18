@@ -165,11 +165,7 @@ const AIFilmTrailer = () => {
           
           <Card className="bg-card/40 backdrop-blur-sm border-border">
             <CardContent className="p-8">
-              <ContactForm 
-                subject="I am interested in getting a AI Film Trailer made"
-                showService={false}
-                projectFields={true}
-              />
+              <ContactForm />
             </CardContent>
           </Card>
         </div>
