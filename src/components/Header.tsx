@@ -7,6 +7,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const services = [
     { name: "Shooting Schedule", href: "/services/shooting-schedule" },
@@ -47,14 +48,17 @@ const Header = () => {
               <div className="absolute top-full left-0 mt-2 w-56 bg-card border border-border rounded-lg shadow-card z-50">
                 <div className="py-2">
                   {services.map((service) => (
-                    <Link
-                      key={service.name}
-                      to={service.href}
-                      className="block px-4 py-2 text-sm font-nav text-card-foreground hover:bg-muted hover:text-accent transition-colors"
-                      onClick={() => setIsServicesOpen(false)}
-                    >
-                      {service.name}
-                    </Link>
+                     <Link
+                       key={service.name}
+                       to={service.href}
+                       className="block px-4 py-2 text-sm font-nav text-card-foreground hover:bg-muted hover:text-accent transition-colors"
+                       onClick={() => {
+                         setIsServicesOpen(false);
+                         setTimeout(() => window.scrollTo(0, 0), 100);
+                       }}
+                     >
+                       {service.name}
+                     </Link>
                   ))}
                 </div>
               </div>
@@ -70,24 +74,46 @@ const Header = () => {
               About Me
             </Link>
 
-            <a
-              href={location.pathname === '/' ? "#testimonials" : "/#testimonials"}
+            <button
+              onClick={() => {
+                if (location.pathname === '/') {
+                  document.getElementById('testimonials')?.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                  navigate('/');
+                  setTimeout(() => {
+                    document.getElementById('testimonials')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }
+              }}
               className="font-nav transition-colors text-foreground hover:text-accent"
             >
               Testimonials
-            </a>
+            </button>
 
-            <Link
-              to="/blog"
-              className={`font-nav transition-colors ${
-                isActive("/blog") ? "text-accent" : "text-foreground hover:text-accent"
-              }`}
+            <a
+              href="https://firstdraftfilmworks.com/blog/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-nav transition-colors text-foreground hover:text-accent"
             >
               Blog
-            </Link>
+            </a>
 
-            <Button variant="nav-cta" size="sm" asChild>
-              <a href={location.pathname === '/' ? "#contact" : "/#contact"}>Contact Me</a>
+            <Button 
+              variant="nav-cta" 
+              size="sm"
+              onClick={() => {
+                if (location.pathname === '/') {
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                  navigate('/');
+                  setTimeout(() => {
+                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }
+              }}
+            >
+              Contact Me
             </Button>
           </div>
 
@@ -112,16 +138,19 @@ const Header = () => {
                 <div className="px-3 py-2 text-sm font-nav font-semibold text-muted-foreground">
                   Services
                 </div>
-                {services.map((service) => (
-                  <Link
-                    key={service.name}
-                    to={service.href}
-                    className="block px-6 py-2 text-sm font-nav text-card-foreground hover:bg-muted hover:text-accent transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {service.name}
-                  </Link>
-                ))}
+                 {services.map((service) => (
+                   <Link
+                     key={service.name}
+                     to={service.href}
+                     className="block px-6 py-2 text-sm font-nav text-card-foreground hover:bg-muted hover:text-accent transition-colors"
+                     onClick={() => {
+                       setIsMenuOpen(false);
+                       setTimeout(() => window.scrollTo(0, 0), 100);
+                     }}
+                   >
+                     {service.name}
+                   </Link>
+                 ))}
               </div>
 
               <Link
@@ -132,27 +161,51 @@ const Header = () => {
                 About Me
               </Link>
 
-              <a
-                href={location.pathname === '/' ? "#testimonials" : "/#testimonials"}
-                className="block px-3 py-2 text-sm font-nav text-card-foreground hover:bg-muted hover:text-accent transition-colors"
-                onClick={() => setIsMenuOpen(false)}
+              <button
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  if (location.pathname === '/') {
+                    document.getElementById('testimonials')?.scrollIntoView({ behavior: 'smooth' });
+                  } else {
+                    navigate('/');
+                    setTimeout(() => {
+                      document.getElementById('testimonials')?.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                  }
+                }}
+                className="block px-3 py-2 text-sm font-nav text-card-foreground hover:bg-muted hover:text-accent transition-colors w-full text-left"
               >
                 Testimonials
-              </a>
+              </button>
 
-              <Link
-                to="/blog"
+              <a
+                href="https://firstdraftfilmworks.com/blog/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="block px-3 py-2 text-sm font-nav text-card-foreground hover:bg-muted hover:text-accent transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Blog
-              </Link>
+              </a>
 
               <div className="px-3 py-2">
-                <Button variant="nav-cta" size="sm" className="w-full" asChild>
-                  <a href={location.pathname === '/' ? "#contact" : "/#contact"} onClick={() => setIsMenuOpen(false)}>
-                    Contact Me
-                  </a>
+                <Button 
+                  variant="nav-cta" 
+                  size="sm" 
+                  className="w-full"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    if (location.pathname === '/') {
+                      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                      navigate('/');
+                      setTimeout(() => {
+                        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                      }, 100);
+                    }
+                  }}
+                >
+                  Contact Me
                 </Button>
               </div>
             </div>

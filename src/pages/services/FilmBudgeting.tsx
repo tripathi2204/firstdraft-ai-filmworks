@@ -1,14 +1,10 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Check } from "lucide-react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import ContactForm from "@/components/ContactForm";
 import filmBudgetingImage from "@/assets/film-budgeting.jpg";
 
 const FilmBudgeting = () => {
@@ -157,114 +153,20 @@ const FilmBudgeting = () => {
       </section>
 
       {/* Quote Form Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-card/30">
+      <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-card/30">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
-              Get free quote
+              Get Free Quote
             </h2>
             <p className="text-lg text-muted-foreground font-body">
-              Tell us about your film budgeting needs
+              Drop us a line by filling the form below or email me at firstdraftfilmworks@gmail.com
             </p>
           </div>
           
           <Card className="bg-card/40 backdrop-blur-sm border-border">
             <CardContent className="p-8">
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Name *</Label>
-                    <Input id="name" name="name" required />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email *</Label>
-                    <Input id="email" name="email" type="email" required />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="company">Production House</Label>
-                    <Input id="company" name="company" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="website">Website</Label>
-                    <Input id="website" name="website" type="url" />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="shootLocation">Shoot Location</Label>
-                  <Select name="shootLocation">
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select shoot location" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="united-states">United States</SelectItem>
-                      <SelectItem value="united-kingdom">United Kingdom</SelectItem>
-                      <SelectItem value="canada">Canada</SelectItem>
-                      <SelectItem value="australia">Australia</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="projectType">Project Type</Label>
-                    <Select name="projectType">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select project type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="short-film">Short Film</SelectItem>
-                        <SelectItem value="feature">Feature</SelectItem>
-                        <SelectItem value="series">Series</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="budgetRange">Expected Budget Range</Label>
-                    <Select name="budgetRange">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select budget range" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="under-3m">Under $3,000,000</SelectItem>
-                        <SelectItem value="3m-6.25m">$3,000,001 - $6,250,000</SelectItem>
-                        <SelectItem value="6.25m-9m">$6,250,001 - $9,000,000</SelectItem>
-                        <SelectItem value="9m-12.5m">$9,000,001 - $12,500,000</SelectItem>
-                        <SelectItem value="12.5m-15m">$12,500,001 - $15,000,000</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="scriptLength">Script Length</Label>
-                  <Textarea 
-                    id="scriptLength" 
-                    name="scriptLength" 
-                    placeholder="Please describe the page length of your script"
-                    rows={3}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="message">Your Message *</Label>
-                  <Textarea 
-                    id="message" 
-                    name="message" 
-                    required 
-                    rows={6}
-                    placeholder="Tell us about your project..."
-                  />
-                </div>
-
-                <Button type="submit" variant="cta" size="lg" className="w-full">
-                  Submit
-                </Button>
-              </form>
+              <ContactForm />
             </CardContent>
           </Card>
         </div>

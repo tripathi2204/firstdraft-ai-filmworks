@@ -32,18 +32,22 @@ const Footer = () => {
               Legals
             </h3>
             <div className="space-y-2">
-              <Link 
-                to="/terms" 
+              <a 
+                href="https://firstdraftfilmworks.com/terms/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="block text-muted-foreground hover:text-accent transition-colors"
               >
                 Terms of Service
-              </Link>
-              <Link 
-                to="/privacy" 
+              </a>
+              <a 
+                href="https://firstdraftfilmworks.com/privacy/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="block text-muted-foreground hover:text-accent transition-colors"
               >
                 Privacy Policy
-              </Link>
+              </a>
             </div>
           </div>
 
@@ -97,12 +101,14 @@ const Footer = () => {
             <h3 className="font-nav font-semibold text-lg text-foreground">
               Blog
             </h3>
-            <Link 
-              to="/blog" 
+            <a 
+              href="https://firstdraftfilmworks.com/blog/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="block text-muted-foreground hover:text-accent transition-colors"
             >
               Latest Articles
-            </Link>
+            </a>
           </div>
         </div>
 
